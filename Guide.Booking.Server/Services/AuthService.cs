@@ -71,8 +71,7 @@ namespace Backend.Services
         {
             if (string.IsNullOrWhiteSpace(input))
                 return string.Empty;
-
-            // Trim whitespace
+                
             input = input.Trim();
 
             // Remove any null characters

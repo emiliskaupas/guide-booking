@@ -99,6 +99,7 @@ using (var scope = app.Services.CreateScope())
     var context = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
     var authService = scope.ServiceProvider.GetRequiredService<IAuthService>();
     context.Database.EnsureCreated();
+    
     //Seed test users
     if (!context.Users.Any())
     {
