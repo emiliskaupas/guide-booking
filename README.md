@@ -1,20 +1,31 @@
 # Guide Booking System
 
-Full-stack tour booking application built with React and ASP.NET Core, featuring role-based authentication booking management.
+Full-stack tour booking application built with React and ASP.NET Core, featuring role-based authentication and booking management.
+
+## Deployment
+
+**Deployed on Azure using Docker containers:**
+- **Frontend**: Azure Container Apps (React + Nginx)
+- **Backend**: Azure Container Apps (ASP.NET Core 8.0)
+- **Database**: Azure SQL Database
+- **Container Registry**: Azure Container Registry
+
 ## Architecture
 ### Technology Stack
 
 **Backend:**
 - ASP.NET Core 8.0 Web API
-- Entity Framework Core (In-Memory Database)
+- Entity Framework Core with SQL Server
 - JWT Authentication with Refresh Tokens
 - PBKDF2 Password Hashing (10,000 iterations, SHA256)
+- Docker containerization
 
 **Frontend:**
 - React 18 with TypeScript
 - Material-UI (MUI) for UI components
 - React Router for navigation
 - Axios for HTTP requests
+- Docker containerization with Nginx
 
 **Security Features:**
 - Input validation with Data Annotations
@@ -26,7 +37,8 @@ Full-stack tour booking application built with React and ASP.NET Core, featuring
 
 ## Database
 
-**Type:** In-Memory Database (via Entity Framework Core)
+**Production:** Azure SQL Database (via Entity Framework Core)
+**Development:** In-Memory Database for local testing
 
 **Models:**
 - `User` - Authentication and user information
@@ -38,7 +50,7 @@ Full-stack tour booking application built with React and ASP.NET Core, featuring
 
 ## User Roles
 
-### Admin
+### Admin (Backend access)
 - View all bookings across all users
 - Access all user data
 - Full system access
