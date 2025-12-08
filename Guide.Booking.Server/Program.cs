@@ -50,15 +50,16 @@ builder.Services.AddCors(options =>
     options.AddPolicy("AllowReactApp",
         policy =>
         {
-            policy.WithOrigins("http://localhost:3000", "http://localhost:5173")
+            policy.AllowAnyOrigin()
                   .AllowAnyHeader()
                   .AllowAnyMethod();
         });
 });
 
 //Database Context
+var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
-    options.UseInMemoryDatabase("GuideBookingDb"));
+    options.UseSqlServer(connectionString));
 
 // Configure JWT Authentication
 var jwtSettings = builder.Configuration.GetSection("JwtSettings");
@@ -97,23 +98,9 @@ var app = builder.Build();
 using (var scope = app.Services.CreateScope())
 {
     var context = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
-    var authService = scope.ServiceProvider.GetRequiredService<IAuthService>();
-    context.Database.EnsureCreated();
     
-    //Seed test users
-    if (!context.Users.Any())
-    {
-        await authService.RegisterAsync("john_doe", "user@example.com", "Customer123!");
-        await authService.RegisterAsync("jane_smith", "user2@example.com", "Customer123!");
-        
-        var adminUser = await authService.RegisterAsync("admin", "admin@example.com", "Admin123!");
-        if (adminUser != null)
-        {
-            adminUser.Role = Backend.Models.UserRole.Admin;
-            context.Users.Update(adminUser);
-            await context.SaveChangesAsync();
-        }
-    }
+    // Apply migrations and create database if it doesn't exist
+    context.Database.Migrate();
 }
 
 app.UseSwagger();

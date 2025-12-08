@@ -1,0 +1,13 @@
+bin/
+obj/
+*.user
+*.suo
+.vs/
+.vscode/
+*.DotSettings.user
+Dockerfile
+.dockerignore
+*.md
+.git/
+.gitignore
+appsettings.Development.json
